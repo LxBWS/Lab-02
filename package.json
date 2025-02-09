@@ -1,0 +1,10 @@
+{
+  "name": "lxbws-project",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "5.0.0",
+    "hardhat": "2.22.18"
+  },
+  "dependencies": {
+    "@remix-project/remixd": "0.6.42"
+  }
+}
