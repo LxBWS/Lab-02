@@ -3,11 +3,9 @@ pragma solidity 0.8.28;
 
 import "./IERC20.sol";
 
-// Note that this is a simplified version of the ERC20 token standard
-// This contract is only for **demonstration purposes** and should not be used in production
 contract LXBWS is IERC20 {
-    string private _name = "";
-    string private _symbol = "";
+    string private _name = "Lisbon Blockchain Winter School Token";
+    string private _symbol = "LXBWS";
     uint256 private _totalSupply;
     mapping(address account => uint256) private _balances;
     mapping(address account => mapping(address spender => uint256)) private _allowances;
@@ -16,7 +14,7 @@ contract LXBWS is IERC20 {
      * @dev Returns the name of the token.
      */
     function name() public view virtual returns (string memory) {
-        // TODO
+        return _name;
     }
 
     /**
@@ -24,7 +22,7 @@ contract LXBWS is IERC20 {
      * name.
      */
     function symbol() public view virtual returns (string memory) {
-        // TODO
+        return _symbol;
     }
 
     /**
@@ -37,41 +35,54 @@ contract LXBWS is IERC20 {
      * it's overridden.
      */
     function decimals() public view virtual returns (uint8) {
-        // TODO
+        return 18;
     }
 
     // Return the total supply of the token
     function totalSupply() public view virtual returns (uint256) {
-        // TODO
+        return _totalSupply;
     }
 
     // Return the balance of a specific account
     function balanceOf(address account) public view virtual returns (uint256) {
-        // TODO
+        return _balances[account];
     }
 
     // Transfer tokens to a recipient (i.e., subtract from the sender and add the same amount of tokens to the recipient)
     function transfer(address to, uint256 value) public virtual returns (bool) {
-        // TODO
+        require(_balances[msg.sender] >= value, "Insufficient balance");
+        _balances[msg.sender] -= value;
+        _balances[to] += value;
+        emit Transfer(msg.sender, to, value);
+        return true;
     }
 
     // Approve a spender to spend a specific amount of tokens on behalf of the sender
     // An example: Alice approves Bob to spend 100 tokens on her behalf
     // Bob can then call transferFrom to transfer tokens from Alice's account to another account
     function allowance(address owner, address spender) public view virtual returns (uint256) {
-        // TODO
+        return _allowances[owner][spender];
     }
 
     // View the allowance of a spender -- this function returns the amount of tokens that the owner has approved the spender to spend
     // An example: Alice approved Bob to spend 100 tokens on her behalf using the approve function
     // Bob can then call this function to check how many tokens he is allowed to spend on behalf of Alice
     function approve(address spender, uint256 value) public virtual returns (bool) {
-        // TODO
+        _allowances[msg.sender][spender] = value;
+        emit Approval(msg.sender, spender, value);
+        return true;
     }
 
     // Transfer tokens on behalf of another account (i.e., transfer tokens from a specific account to another account)
     function transferFrom(address from, address to, uint256 value) public virtual returns (bool) {
-        // TODO
+        require(_balances[from] >= value, "Insufficient balance");
+        require(_allowances[from][msg.sender] >= value, "Allowance exceeded");
+
+        _balances[from] -= value;
+        _balances[to] += value;
+        _allowances[from][msg.sender] -= value;
+        emit Transfer(from, to, value);
+        return true;
     }
 
     // Mint new tokens to an account (only for demonstration purposes)
