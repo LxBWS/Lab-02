@@ -2,6 +2,8 @@
 
 Support material for the Lisbon Blockchain Winter School (Lab 02)
 
+Slides [here](https://drive.google.com/drive/folders/1fxPBCplE0fZyLSNnAXb6cMsrV8XYCH0I)
+
 ## Description
 
 Practice: implement your first smart contract (an ERC 20 token)
@@ -26,7 +28,7 @@ npx hardhat node
 ```
 Symbol: LXBWS
 Name: Lisbon Blockchain Winter School Token
-Decimals: 0
+Decimals: 18
 ```
 
 ### Installing dependencies, compiling contracts and running tests
